@@ -1,0 +1,14 @@
+datasource sqlite {
+  url      = "file:../../prisma.db"
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Author {
+  id        String @id
+  firstName String
+  lastName  String
+}
