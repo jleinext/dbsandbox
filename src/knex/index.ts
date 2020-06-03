@@ -13,14 +13,10 @@ async function main() {
     debug: true, // Possibilité de debug facilement les requêtes qui entrent et sortent
   });
 
-  // Dans une vraie application, on passerait par des migrations de schémas
-  if (!(await db.schema.hasTable("authors"))) {
-    await db.schema.createTable("authors", (builder) => {
-      builder.string("id").primary();
-      builder.string("firstName");
-      builder.string("lastName");
-    });
-  }
+  // Migre la base de données dans sa dernière version au lancement de l'application.
+  await db.migrate.latest({
+    directory: "./src/knex/migrations", // Ici il faudrait que le chemin soit relatif à ce fichier
+  });
 
   // Manipulation de notre objet domaine ...
   const author = new Author(
